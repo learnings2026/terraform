@@ -40,7 +40,7 @@ resource "aws_security_group" "ec2_sg" {
 
 resource "aws_instance" "ec2" {
   ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
 
   security_groups = [aws_security_group.ec2_sg.name]
 
@@ -54,6 +54,3 @@ output "instance_id" {
   value = aws_instance.ec2.id
 }
 
-output "public_ip" {
-  value = aws_instance.ec2.public_ip
-}
