@@ -1,0 +1,51 @@
+name: Terraform - runnertest
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'runnertest/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'runnertest/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # required for OIDC
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: [self-hosted, test]   # "test" is your runner name/label
+    defaults:
+      run:
+        working-directory: ./runnertest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::828627177081:oidc-provider/token.actions.githubusercontent.com
+          aws-region: us-west-2   # change to your region
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5    # pin to whatever version you use
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
