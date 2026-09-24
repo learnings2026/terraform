@@ -36,6 +36,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Debug role ARN
+        run: 'echo "Role ARN length: ${#ROLE_ARN}"'
+        env:
+          ROLE_ARN: ${{ secrets.ARN_NAME }}  
+
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
