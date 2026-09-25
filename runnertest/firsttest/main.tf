@@ -18,8 +18,8 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-resource "aws_security_group" "ec2_sg" {
-  name        = "terraform-ec2-sg"
+resource "aws_security_group" "ec2_sg1" {
+  name        = "terraform-ec2-sg1"
   description = "Security group for Terraform EC2 lab"
 
   ingress {
@@ -45,12 +45,12 @@ resource "aws_instance" "ec2" {
   instance_type = "t3.micro"
 
  
-  security_groups = [aws_security_group.ec2_sg.name]
+  security_groups = [aws_security_group.ec2_sg1.name]
 
   associate_public_ip_address = true
 
   tags = {
-    Name        = "terraform-ec2-lab1"
+    Name        = "terraform-ec2-lab2"
     Environment = "lab"
   }
 }
