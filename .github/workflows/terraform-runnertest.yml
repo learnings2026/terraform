@@ -70,13 +70,6 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
         run: terraform apply -auto-approve tfplan 
 
-      - name: Upload private key artifact
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
-        uses: actions/upload-artifact@v4
-        with:
-          name: deployer-key
-          path: runnertest/terraform-ec2-key.pem
-          retention-days: 1
       
       - name: Terraform Destroy
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'

@@ -38,24 +38,7 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-# Generate an RSA key pair
-resource "tls_private_key" "this" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
 
-# Register the public key with AWS
-resource "aws_key_pair" "deployer" {
-  key_name   = "terraform-ec2-key"
-  public_key = tls_private_key.this.public_key_openssh
-}
-
-# Save the private key locally so you can use it with ssh
-resource "local_file" "private_key" {
-  content         = tls_private_key.this.private_key_pem
-  filename        = "terraform-ec2-key.pem"
-  file_permission = "0400"
-}
 
 resource "aws_instance" "ec2" {
   ami           = data.aws_ami.amazon_linux.id
@@ -67,7 +50,7 @@ resource "aws_instance" "ec2" {
   associate_public_ip_address = true
 
   tags = {
-    Name        = "terraform-ec2-lab"
+    Name        = "terraform-ec2-lab1"
     Environment = "lab"
   }
 }
