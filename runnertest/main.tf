@@ -44,7 +44,7 @@ resource "aws_instance" "ec2" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
 
-  key_name        = aws_key_pair.deployer.key_name
+
   security_groups = [aws_security_group.ec2_sg.name]
 
   associate_public_ip_address = true
