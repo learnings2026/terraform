@@ -4,7 +4,6 @@ terraform {
     key          = "ec2-lab/terraform.tfstate"
     region       = "us-west-2"
     encrypt      = true
-    use_lockfile = true
   }
 }
 
