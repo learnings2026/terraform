@@ -1,3 +1,14 @@
+terraform {
+  backend "s3" {
+    bucket       = "terraform-statefile-828627177081-us-west-2-an"
+    key          = "ec2-lab/terraform.tfstate"
+    region       = "us-west-2"
+    encrypt      = true
+    use_lockfile = true
+  }
+}
+
+
 provider "aws" {
   region = "us-west-2"
 }
