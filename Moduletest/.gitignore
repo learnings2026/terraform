@@ -4,4 +4,5 @@
 *.tfplan
 crash.log
 README.md
+README1.md
 # keep the lock file committed: .terraform.lock.hcl
